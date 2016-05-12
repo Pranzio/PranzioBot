@@ -2,4 +2,3 @@
 
 // TODO!
 console.error("TODO");
-process.exit(1);
