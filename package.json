@@ -1,0 +1,31 @@
+{
+  "name": "pranzio_bot",
+  "version": "0.1.0",
+  "description": "Simple Telegram Bot to fire the \"pranzio\" alarm at launch time.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "./node_modules/.bin/mocha",
+    "coverage": "./node_modules/.bin/istanbul cover _mocha test --include-all-sources"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pranzio/PranzioBot.git"
+  },
+  "keywords": [
+    "pranzio",
+    "telegram",
+    "bot"
+  ],
+  "author": "Davide Pedranz & Davide Pizzolotto",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/Pranzio/PranzioBot/issues"
+  },
+  "homepage": "https://github.com/Pranzio/PranzioBot#readme",
+  "private": true,
+  "devDependencies": {
+    "istanbul": "^0.4.3",
+    "mocha": "^2.4.5"
+  }
+}
