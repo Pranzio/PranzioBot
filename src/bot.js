@@ -3,6 +3,7 @@
 var TelegramBot = require('node-telegram-bot-api');
 var PranzioClient = require('./pranzio');
 var MESSAGES = require('./messages');
+var fs = require('fs');
 
 // helper function -> exit with error
 var exit = function (msg) {
@@ -20,6 +21,11 @@ module.exports = function (token, options) {
 
     // check if the bot should use a webHook
     var webHook = options.webHook;
+
+    var date = new Date();
+
+    var logfile = fs.createWriteStream(__dirname+'/pranzio_call.csv',{'flags': 'w'});
+    log.write('timestamp,caller_id,caller_uname\n');
 
     var pranzio = new PranzioClient(options.redisUrl);
 
@@ -101,6 +107,7 @@ module.exports = function (token, options) {
 
                     //send the pranzio-signal
                 case '/pranzio':
+                    log.write(date.getTime()+","+userID+","+username+"\n");
                     if(pranzio.callPranzio(username,args[0],bot))
                         bot.sendMessage(chatID,MESSAGES.PRANZIO_CALLED);
                     else
