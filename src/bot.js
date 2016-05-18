@@ -101,8 +101,10 @@ module.exports = function (token, options) {
 
                     //send the pranzio-signal
                 case '/pranzio':
-                    pranzio.callPranzio(username,args[0],bot);
-                    bot.sendMessage(chatID,MESSAGES.PRANZIO_CALLED);
+                    if(pranzio.callPranzio(username,args[0],bot))
+                        bot.sendMessage(chatID,MESSAGES.PRANZIO_CALLED);
+                    else
+                        bot.sendMessage(chatID,MESSAGES.PRANZIO_CLOSED);
                     break;
 /*
  * future release

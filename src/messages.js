@@ -27,7 +27,8 @@ var MESSAGES = Object.freeze({
     SET_ON:  "Hai attivato la ricezione dei messaggi, buon pranzio\n", 
     SET_OFF: "Hai disattivato la ricezione dei messaggi, asociale.\n",
     PRANZIO_MSG: " chiama il Pranzio con il seguente messaggio:\n\n\n", //username+PRANZIO_MSG+message, see line 26 of pranzio.js
-    PRANZIO_CALLED: "Hai scelto di chiamare a raccolta i tuoi discepoli per il Pranzio\n Buon appetito!"
+    PRANZIO_CALLED: "Hai scelto di chiamare a raccolta i tuoi discepoli per il Pranzio\n Buon appetito!",
+    PRANZIO_CLOSED: "La mensa è chiusa :("
 });
 
 module.exports = MESSAGES;
