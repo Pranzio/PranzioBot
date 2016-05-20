@@ -4,6 +4,7 @@
   "description": "Simple Telegram Bot to fire the \"pranzio\" alarm at launch time.",
   "main": "index.js",
   "scripts": {
+    "postinstall": "tsd install",
     "prestart": "tsc",
     "start": "node src/index.js",
     "pretest": "tsc",
@@ -27,6 +28,7 @@
   "homepage": "https://github.com/Pranzio/PranzioBot#readme",
   "private": true,
   "devDependencies": {
+    "chai": "^3.5.0",
     "mocha": "^2.4.5",
     "nyc": "^6.4.4",
     "typescript": "^1.8.10"
