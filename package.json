@@ -4,7 +4,7 @@
   "description": "Simple Telegram Bot to fire the \"pranzio\" alarm at launch time.",
   "main": "src/bot.ts",
   "scripts": {
-    "postinstall": "tsd install",
+    "postinstall": "typings install",
     "prestart": "tsc",
     "start": "node dist/src/bot.js",
     "pretest": "tsc",
@@ -30,13 +30,13 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "mocha": "^2.4.5",
-    "nyc": "^6.4.4",
-    "tsd": "^0.6.5",
-    "typescript": "^1.8.10"
+    "nyc": "^6.4.4"
   },
   "dependencies": {
     "bluebird": "^3.4.0",
     "node-telegram-bot-api": "^0.21.1",
-    "redis": "^2.6.0-2"
+    "redis": "^2.6.0-2",
+    "typescript": "^1.8.10",
+    "typings": "^1.0.4"
   }
 }

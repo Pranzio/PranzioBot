@@ -1,4 +1,4 @@
-/// <reference path="../typings/tsd.d.ts" />
+/// <reference path="../typings/index.d.ts" />
 import TelegramBot = require('node-telegram-bot-api');
 import MESSAGES from './messages';
 import PranzioLogger from './logger';
