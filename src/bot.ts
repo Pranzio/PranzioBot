@@ -1,13 +1,14 @@
 /// <reference path="../typings/tsd.d.ts" />
 import TelegramBot = require('node-telegram-bot-api');
 import MESSAGES from './messages';
+import PranzioLogger from './logger';
 import DB from './db';
 
 // helper function -> exit with error
 function exit(msg) {
     console.error(msg);
     throw new Error(msg);
-};
+}
 
 // check if it is pranzio time
 function isPranzioTime() {
@@ -32,11 +33,14 @@ async function main() {
         exit('Please add a WEBHOOK...');
     }
 
+    // create logger
+    let logger = new PranzioLogger();
+
     // open db
-    var db = new DB();
+    let db = new DB();
 
     // create Bot
-    var bot = new TelegramBot(TOKEN, {
+    let bot = new TelegramBot(TOKEN, {
         webHook: {
             port: PORT || 8000,
             host: '0.0.0.0'
@@ -53,7 +57,7 @@ async function main() {
 
         // TODO: build regex to remove @PranzioBot at the end of the commands
         // parse command (eg. /start@PranzioBot => /start)
-        let args = msg.text.trim().split(" ");
+        let args = msg.text.trim().split(' ');
         let command = args[0].replace(name, '');
         args.shift();
 
@@ -97,6 +101,11 @@ async function main() {
 
             // send the pranzio-signal
             case '/pranzio':
+
+                // log
+                logger.log(userID, username);
+
+                // check if pranzio time
                 let pranzioTime = isPranzioTime();
 
                 // pranzio time -> send message
@@ -122,6 +131,9 @@ async function main() {
                 }
         }
     });
+
+    // running =D
+    console.info(`${name} running... Press Ctrl+C to stop the bot.`);
 }
 
 // execute bot

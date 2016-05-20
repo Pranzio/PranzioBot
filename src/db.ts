@@ -5,9 +5,9 @@ import Promise = require('bluebird');
 // DB client
 export default class DB {
 
-    static USERS = 'user_ids';
+    private static USERS = 'user_ids';
 
-    client;
+    private client;
 
     constructor(url?: string) {
         let tmp = redis.createClient(url || process.env.REDIS_URL);

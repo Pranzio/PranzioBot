@@ -1,7 +1,0 @@
-var date = new Date();
-
-var logfile = fs.createWriteStream(__dirname + '/pranzio_call.csv', { 'flags': 'w' });
-log.write('timestamp,caller_id,caller_uname\n');
-
-
-log.write(date.getTime() + "," + userID + "," + username + "\n");   
