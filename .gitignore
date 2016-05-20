@@ -1,15 +1,20 @@
-# Logs
+# node
 logs
 *.log
 npm-debug.log*
-
-# Runtime data
 pids
 *.pid
 *.seed
 
-# Dependency directory
+# node modules
 node_modules
 
-# coverage Istambul
+# coverage
+.nyc_output
 coverage/
+
+# generated JS files
+dist/
+
+# typescript
+typings/

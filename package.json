@@ -2,11 +2,14 @@
   "name": "pranzio_bot",
   "version": "0.1.0",
   "description": "Simple Telegram Bot to fire the \"pranzio\" alarm at launch time.",
-  "main": "index.js",
+  "main": "src/bot.ts",
   "scripts": {
-    "start": "node src/index.js",
-    "test": "./node_modules/.bin/mocha",
-    "coverage": "./node_modules/.bin/istanbul cover _mocha test --include-all-sources"
+    "postinstall": "typings install",
+    "prestart": "tsc",
+    "start": "node dist/src/bot.js",
+    "pretest": "tsc",
+    "test": "mocha dist/test/",
+    "coverage": "nyc --reporter=lcov npm test && nyc report"
   },
   "repository": {
     "type": "git",
@@ -25,7 +28,15 @@
   "homepage": "https://github.com/Pranzio/PranzioBot#readme",
   "private": true,
   "devDependencies": {
-    "istanbul": "^0.4.3",
-    "mocha": "^2.4.5"
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5",
+    "nyc": "^6.4.4"
+  },
+  "dependencies": {
+    "bluebird": "^3.4.0",
+    "node-telegram-bot-api": "^0.21.1",
+    "redis": "^2.6.0-2",
+    "typescript": "^1.8.10",
+    "typings": "^1.0.4"
   }
 }
