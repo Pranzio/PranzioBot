@@ -9,7 +9,7 @@
     "start": "node dist/src/bot.js",
     "pretest": "tsc",
     "test": "mocha dist/test/",
-    "coverage": "nyc npm test"
+    "coverage": "nyc --reporter=lcov npm test && nyc report"
   },
   "repository": {
     "type": "git",
