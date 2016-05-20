@@ -38,16 +38,16 @@ describe('DB', () => {
         });
     });
     
-    describe('#deleteUser', async () => {
+    describe('#removeUser', async () => {
         it('should not delete a non-existing user', async () => {
-            await db.deleteUser('ciao');
+            await db.removeUser('ciao');
             let users = await db.getUsers();
             expect(users).to.be.empty;
         });
         it('should not delete an existing user', async () => {
             await db.addUser('ciao');
             await db.addUser('hello');
-            await db.deleteUser('ciao')
+            await db.removeUser('ciao')
             let users = await db.getUsers();
             expect(users).to.have.members(['hello']);
         });

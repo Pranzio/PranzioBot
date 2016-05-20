@@ -22,11 +22,11 @@ export default class DB {
         await this.client.saddAsync(DB.USERS, id);
     }
 
-    async deleteUser(id) {
+    async removeUser(id) {
         await this.client.sremAsync(DB.USERS, id);
     }
 
-    async getUsers() {
+    async getUsers(): Promise<string[]> {
         return await this.client.smembersAsync(DB.USERS);
     }
 

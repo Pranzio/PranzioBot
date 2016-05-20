@@ -2,11 +2,11 @@
   "name": "pranzio_bot",
   "version": "0.1.0",
   "description": "Simple Telegram Bot to fire the \"pranzio\" alarm at launch time.",
-  "main": "index.js",
+  "main": "src/bot.ts",
   "scripts": {
     "postinstall": "tsd install",
     "prestart": "tsc",
-    "start": "node src/index.js",
+    "start": "node dist/src/bot.js",
     "pretest": "tsc",
     "test": "mocha dist/test/",
     "coverage": "nyc npm test"
