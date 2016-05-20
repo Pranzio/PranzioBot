@@ -4,11 +4,11 @@
   "description": "Simple Telegram Bot to fire the \"pranzio\" alarm at launch time.",
   "main": "index.js",
   "scripts": {
-    "compile": "tsc -w",
+    "prestart": "tsc",
     "start": "node src/index.js",
     "pretest": "tsc",
-    "test": "./node_modules/.bin/mocha",
-    "coverage": "./node_modules/.bin/istanbul cover _mocha test --include-all-sources"
+    "test": "mocha",
+    "coverage": "nyc --reporter=json npm test && remap-istanbul -i coverage/coverage.json -o coverage/coverage.json && istanbul report lcov text"
   },
   "repository": {
     "type": "git",
@@ -28,7 +28,9 @@
   "private": true,
   "devDependencies": {
     "istanbul": "^0.4.3",
-    "mocha": "^2.4.5"
+    "mocha": "^2.4.5",
+    "nyc": "^6.4.4",
+    "remap-istanbul": "^0.6.4"
   },
   "dependencies": {
     "bluebird": "^3.4.0",

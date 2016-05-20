@@ -31,3 +31,5 @@ export default class DB {
     }
 
 }
+
+//# sourceMappingURL=db.js.map
