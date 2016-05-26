@@ -25,7 +25,8 @@ export default {
     ERR_UNKNOW_COMMAND: 'Il comando non è ancora stato implementato, ma lo sarà a breve. Forse. Forse mai.',
     ERR_MISSING_ARGS: 'Questo comando richiede almeno un parametro. Leggi la descrizione con /help, dai :(',
 
-    PRANZIO_MSG: ' chiama il Pranzio con il seguente messaggio:\n\n\n',
+    PRANZIO_MSG: ' chiama il Pranzio con il seguente messaggio:\n\n',
+    PRANZIO_NOMSG: ' pensa che sia ora di trovarsi per pranzio. Solito posto',
     PRANZIO_CALLED: `Hai scelto di chiamare a raccolta i tuoi discepoli per il Pranzio
     Buon appetito!`,
     PRANZIO_CLOSED: 'La mensa è chiusa :('

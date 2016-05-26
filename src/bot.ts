@@ -4,6 +4,8 @@ import MESSAGES from './messages';
 import PranzioLogger from './logger';
 import DB from './db';
 
+const TIMEZONE = 1;  //Italy = GMT+1
+
 // helper function -> exit with error
 function exit(msg) {
     console.error(msg);
@@ -12,9 +14,23 @@ function exit(msg) {
 
 // check if it is pranzio time
 function isPranzioTime() {
-    // TODO: check for timezone and daylight saving time
-    let hour = new Date().getHours();
-    return hour > 11 && hour < 14;
+  //check if monday-friday
+  let dt = new Date();
+  if(dt.getDay()<1 || dt.getDay() >5)
+    return false;
+
+  //check if DST, True if yes
+  let jan = new Date(dt.getFullYear(),0,1);
+  let jul = new Date(dt.getFullYear(),6,1);
+  let std = Math.max(jan.getTimezoneOffset(),jul.getTimezoneOffset());
+  let dst = dt.getTimezoneOffset() < std;
+
+  //get UTC hour and add timezone and dst time
+  let hour = dt.getUTCHours();
+  dst?hour+=(TIMEZONE+1):hour+=TIMEZONE;
+
+  //return if it is pranzio time
+  return hour > 11 && hour < 15;
 }
 
 // entry point
@@ -111,10 +127,17 @@ async function main() {
                 // pranzio time -> send message
                 if (pranzioTime) {
                     let subscribers = await db.getUsers();
+                    let custom_msg = args.join(" ");
+                    if(custom_msg != "")
                     subscribers.forEach(user => {
-                        let msg = username + MESSAGES.PRANZIO_MSG + args[0];
+                        let msg = username + MESSAGES.PRANZIO_MSG + args.join(" ");
                         bot.sendMessage(user, msg);
                     });
+                    else
+                    subscribers.forEach(user => {
+                      let msg = username + MESSAGES.PRANZIO_NOMSG;
+                      bot.sendMessage(user,msg);
+                    })
                     bot.sendMessage(chatID, MESSAGES.PRANZIO_CALLED);
                 }
 
@@ -124,7 +147,7 @@ async function main() {
                 }
 
                 break;
-
+                
             default:
                 if (new RegExp('^\/([^@])*((' + name + ')\s*.*)?$').test(command)) {
                     bot.sendMessage(chatID, MESSAGES.ERR_UNKNOW_COMMAND);
