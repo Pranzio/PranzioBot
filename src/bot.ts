@@ -130,7 +130,7 @@ async function main() {
                     let custom_msg = args.join(" ");
                     if(custom_msg != "")
                     subscribers.forEach(user => {
-                        let msg = username + MESSAGES.PRANZIO_MSG + args.join(" ");
+                        let msg = username + MESSAGES.PRANZIO_MSG + custom_msg;
                         bot.sendMessage(user, msg);
                     });
                     else
