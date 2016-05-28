@@ -37,6 +37,8 @@
     "node-telegram-bot-api": "^0.21.1",
     "redis": "^2.6.0-2",
     "typescript": "^1.8.10",
-    "typings": "^1.0.4"
+    "typings": "^1.0.4",
+    "winston": "^2.2.0",
+    "winston-mongodb": "^1.5.0"
   }
 }

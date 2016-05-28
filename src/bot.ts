@@ -1,8 +1,9 @@
 /// <reference path="../typings/index.d.ts" />
 import TelegramBot = require('node-telegram-bot-api');
 import MESSAGES from './messages';
-import PranzioLogger from './logger';
 import DB from './db';
+import winston = require('winston');
+require('winston-mongodb').MongoDB; // log on MongoDB
 
 const TIMEZONE = 1;  //Italy = GMT+1
 
@@ -35,6 +36,34 @@ function isPranzioTime() {
     return hour > 11 && hour < 15;
 }
 
+// create the logger
+function getLogger() {
+
+    // environment
+    const MONGODB_URI = process.env.MONGODB_URI;
+
+    // where to log
+    let transports = [
+        new (winston.transports.Console)(),
+        new (winston.transports.File)({ filename: 'logs.log' })
+    ];
+
+    // if MongoDB available -> log there
+    if (typeof MONGODB_URI !== 'undefined') {
+        transports.push(new (winston.transports['MongoDB'])({ db: MONGODB_URI }));    // HACK: missing d.ts
+    } else {
+        console.log('MONGODB_URI not provided... skip log on MongoDB');
+    }
+
+    // create logger   
+    let logger = new (winston.Logger)({
+        level: 'verbose',
+        transports: transports
+    });
+
+    return logger;
+}
+
 // entry point
 async function main() {
 
@@ -51,18 +80,17 @@ async function main() {
         exit('Please add a WEBHOOK...');
     }
 
-    // create logger
-    let logger = new PranzioLogger();
+    // logger
+    let logger = getLogger();
 
     // open db
     let db = new DB();
 
     // create Bot
+    let port = PORT || 8000;
+    let host = '0.0.0.0';
     let bot = new TelegramBot(TOKEN, {
-        webHook: {
-            port: PORT || 8000,
-            host: '0.0.0.0'
-        }
+        webHook: { port, host }
     });
     bot.setWebHook(WEBHOOK + '/bot' + TOKEN);
 
@@ -88,6 +116,9 @@ async function main() {
         if (typeof username === 'undefined' || username === '') {
             username = msg.from.first_name;
         }
+
+        // log
+        logger.info(command, `@${username} called ${command}`, { userID, username, command });
 
         // reply
         switch (command) {
@@ -119,9 +150,6 @@ async function main() {
 
             // send the pranzio-signal
             case '/pranzio':
-
-                // log
-                logger.log(userID, username);
 
                 // check if pranzio time
                 let pranzioTime = isPranzioTime();
@@ -156,8 +184,17 @@ async function main() {
     });
 
     // running =D
-    console.info(`${name} running... Press Ctrl+C to stop the bot.`);
+    console.info(`
+${name} running:
+    Internal address: ${host}:${port}
+    External address: ${WEBHOOK}
+    
+Press Ctrl+C to stop the bot...
+`);
 }
 
 // execute bot
 main();
+process.on('unhandledRejection', function (reason, p) {
+    throw new Error(reason);
+});
