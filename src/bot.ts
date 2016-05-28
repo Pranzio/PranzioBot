@@ -14,23 +14,25 @@ function exit(msg) {
 
 // check if it is pranzio time
 function isPranzioTime() {
-  //check if monday-friday
-  let dt = new Date();
-  if(dt.getDay()<1 || dt.getDay() >5)
-    return false;
 
-  //check if DST, True if yes
-  let jan = new Date(dt.getFullYear(),0,1);
-  let jul = new Date(dt.getFullYear(),6,1);
-  let std = Math.max(jan.getTimezoneOffset(),jul.getTimezoneOffset());
-  let dst = dt.getTimezoneOffset() < std;
+    // check if monday-friday
+    let dt = new Date();
+    if (dt.getDay() < 1 || dt.getDay() > 5) {
+        return false;
+    }
 
-  //get UTC hour and add timezone and dst time
-  let hour = dt.getUTCHours();
-  dst?hour+=(TIMEZONE+1):hour+=TIMEZONE;
+    // check if DST, True if yes
+    let jan = new Date(dt.getFullYear(), 0, 1);
+    let jul = new Date(dt.getFullYear(), 6, 1);
+    let std = Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
+    let dst = dt.getTimezoneOffset() < std;
 
-  //return if it is pranzio time
-  return hour > 11 && hour < 15;
+    // get UTC hour and add timezone and dst time
+    let hour = dt.getUTCHours();
+    hour += dst ? (TIMEZONE + 1) : TIMEZONE;
+
+    // return if it is pranzio time
+    return hour > 11 && hour < 15;
 }
 
 // entry point
@@ -128,16 +130,14 @@ async function main() {
                 if (pranzioTime) {
                     let subscribers = await db.getUsers();
                     let custom_msg = args.join(" ");
-                    if(custom_msg != "")
+
+                    // send to subscribers
                     subscribers.forEach(user => {
-                        let msg = username + MESSAGES.PRANZIO_MSG + custom_msg;
+                        let msg = (custom_msg != "") ? MESSAGES.PRANZIO_MSG + custom_msg : MESSAGES.PRANZIO_NOMSG;
                         bot.sendMessage(user, msg);
                     });
-                    else
-                    subscribers.forEach(user => {
-                      let msg = username + MESSAGES.PRANZIO_NOMSG;
-                      bot.sendMessage(user,msg);
-                    })
+
+                    // send back to caller
                     bot.sendMessage(chatID, MESSAGES.PRANZIO_CALLED);
                 }
 
@@ -147,7 +147,7 @@ async function main() {
                 }
 
                 break;
-                
+
             default:
                 if (new RegExp('^\/([^@])*((' + name + ')\s*.*)?$').test(command)) {
                     bot.sendMessage(chatID, MESSAGES.ERR_UNKNOW_COMMAND);
