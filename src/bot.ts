@@ -138,6 +138,13 @@ async function main() {
                 bot.sendMessage(chatID, MESSAGES.HELP);
                 break;
 
+            // info
+            case '/info':
+                let users = await db.getUsers();
+                let n = users.length;
+                bot.sendMessage(chatID, n + MESSAGES.INFO);
+                break;
+
             // activate notifications
             case '/on':
                 db.addUser(chatID);

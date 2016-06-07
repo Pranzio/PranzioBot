@@ -31,6 +31,7 @@ export default {
     Buon appetito!`,
     PRANZIO_CLOSED: 'La mensa è chiusa :(',
     
-    NO_NAME: '{Brutta persona senza nome}'
+    NO_NAME: '{Brutta persona senza nome}',
+    INFO: ' utenti attivi... WOW'
 
 }
