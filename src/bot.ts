@@ -117,7 +117,7 @@ async function main() {
         // get info from the message
         let chatID = msg.chat.id;
         let userID = msg.from.id;
-        let username = msg.from.username || msg.from.first_name;
+        let username = msg.from.username || msg.from.first_name || MESSAGES.NO_NAME;
 
         // log
         logger.info(command, `@${username} called ${command}`, { userID, username, command });
@@ -163,7 +163,7 @@ async function main() {
 
                     // send to subscribers
                     subscribers.forEach(user => {
-                        let msg = (custom_msg != "") ? MESSAGES.PRANZIO_MSG + custom_msg : MESSAGES.PRANZIO_NOMSG;
+                        let msg = '@' + username + (custom_msg != "" ? MESSAGES.PRANZIO_MSG + custom_msg : MESSAGES.PRANZIO_NOMSG);
                         bot.sendMessage(user, msg);
                     });
 

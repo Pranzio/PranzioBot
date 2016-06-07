@@ -29,6 +29,8 @@ export default {
     PRANZIO_NOMSG: ' pensa che sia ora di trovarsi per pranzio. Solito posto',
     PRANZIO_CALLED: `Hai scelto di chiamare a raccolta i tuoi discepoli per il Pranzio
     Buon appetito!`,
-    PRANZIO_CLOSED: 'La mensa è chiusa :('
+    PRANZIO_CLOSED: 'La mensa è chiusa :(',
+    
+    NO_NAME: '{Brutta persona senza nome}'
 
 }
