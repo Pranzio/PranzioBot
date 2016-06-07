@@ -16,24 +16,31 @@ function exit(msg) {
 // check if it is pranzio time
 function isPranzioTime() {
 
-    // check if monday-friday
-    let dt = new Date();
-    if (dt.getDay() < 1 || dt.getDay() > 5) {
-        return false;
-    }
+    // HACK: @amicone
+    // TODO: fix!
+    return true;
 
-    // check if DST, True if yes
-    let jan = new Date(dt.getFullYear(), 0, 1);
-    let jul = new Date(dt.getFullYear(), 6, 1);
-    let std = Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
-    let dst = dt.getTimezoneOffset() < std;
+    /*
+        // check if monday-friday
+        let dt = new Date();
+        if (dt.getDay() < 1 || dt.getDay() > 5) {
+            return false;
+        }
+    
+        // check if DST, True if yes
+        let jan = new Date(dt.getFullYear(), 0, 1);
+        let jul = new Date(dt.getFullYear(), 6, 1);
+        let std = Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
+        let dst = dt.getTimezoneOffset() < std;
+    
+        // get UTC hour and add timezone and dst time
+        let hour = dt.getUTCHours();
+        hour += dst ? (TIMEZONE + 1) : TIMEZONE;
+    
+        // return if it is pranzio time
+        return hour > 11 && hour < 15;
+    */
 
-    // get UTC hour and add timezone and dst time
-    let hour = dt.getUTCHours();
-    hour += dst ? (TIMEZONE + 1) : TIMEZONE;
-
-    // return if it is pranzio time
-    return hour > 11 && hour < 15;
 }
 
 // create the logger
@@ -110,12 +117,7 @@ async function main() {
         // get info from the message
         let chatID = msg.chat.id;
         let userID = msg.from.id;
-        let username = msg.from.username;
-
-        // handle the case where the user has no username set
-        if (typeof username === 'undefined' || username === '') {
-            username = msg.from.first_name;
-        }
+        let username = msg.from.username || msg.from.first_name;
 
         // log
         logger.info(command, `@${username} called ${command}`, { userID, username, command });
